@@ -1,0 +1,116 @@
+extends navbar
+
+block content
+  #myCarousel.carousel.slide(data-ride='carousel')
+    // Indicators
+    ol.carousel-indicators
+      li.active(data-target='#myCarousel', data-slide-to='0')
+      li(data-target='#myCarousel', data-slide-to='1')
+      li(data-target='#myCarousel', data-slide-to='2')
+    .carousel-inner(role='listbox')
+      .item.active
+        img(src='/images/LoW.jpg', alt='First slide')
+        .container
+          .carousel-caption
+            h1 LibRadar
+
+            p
+              | Instant Detecting Tool for Android 3rd-party Libraries
+            a.btn.btn-lg.btn-primary(href='/LibRadar', role='button') 优秀的SDK即时检测工具
+      .item
+        img(src='/images/ROOMS.jpg', alt='Second slide')
+        .container
+          .carousel-caption
+            h1 RiskEva
+            p
+              | An Intelligent Tool for App Risk Evaluation.
+            p
+              a.btn.btn-lg.btn-primary(href='#', role='button') 灵活有效的应用评分工具
+      .item
+        img(src='/images/NA.jpg', alt='Third slide')
+        .container
+          .carousel-caption
+            h1 One more for good measure.
+            p
+              | Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
+            p
+              a.btn.btn-lg.btn-primary(href='#', role='button') 点击查看详情
+    a.left.carousel-control(href='#myCarousel', role='button', data-slide='prev')
+      span.glyphicon.glyphicon-chevron-left
+      span.sr-only Previous
+    a.right.carousel-control(href='#myCarousel', role='button', data-slide='next')
+      span.glyphicon.glyphicon-chevron-right
+      span.sr-only Next
+
+  .container.marketing
+    // Three columns of text below the carousel
+    .row
+      .col-lg-4
+        img.img-circle(src='/images/radar.png', alt='Generic placeholder image', style='width: 140px; height: 140px;')
+        h2 LibRadar
+        p
+          | LibRadar是一个能够立即检测应用中所包含的第三方库信息的方法。它通过从超过100万个应用中提取静态特征，聚类得到第三方库信息的数据库，最终使用这些数据进行即时检测，具有准确、高效、全面的特点。
+        p
+          a.btn.btn-default(href='/LibRadar', role='button') View details »
+      // /.col-lg-4
+      .col-lg-4
+        img.img-circle(src='/images/radar.png', style='width: 140px; height: 140px;')
+        h2 RiskEva
+        p
+          | Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.
+        p
+          a.btn.btn-default(href='#', role='button') View details »
+      // /.col-lg-4
+      .col-lg-4
+        img.img-circle(src='/images/radar.png', alt='Generic placeholder image', style='width: 140px; height: 140px;')
+        h2 AppInfo
+        p
+          | Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.
+        p
+          a.btn.btn-default(href='#', role='button') View details »
+      // /.col-lg-4
+    // /.row
+    // START THE FEATURETTES
+
+    //hr.featurette-divider
+    //.row.featurette
+    //  .col-md-7
+    //    h2.featurette-heading
+    //      | First featurette heading.
+    //      span.text-muted It'll blow your mind.
+    //    p.lead
+    //      | Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.
+    //  .col-md-5
+    //    img.featurette-image.img-responsive(data-src='holder.js/500x500/auto', alt='500x500', src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDUwMCA1MDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjE5MC4zMjAzMTI1IiB5PSIyNTAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MjNwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj41MDB4NTAwPC90ZXh0PjwvZz48L3N2Zz4=', data-holder-rendered='true')
+    //hr.featurette-divider
+    //.row.featurette
+    //  .col-md-5
+    //    img.featurette-image.img-responsive(data-src='holder.js/500x500/auto', alt='500x500', src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDUwMCA1MDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjE5MC4zMjAzMTI1IiB5PSIyNTAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MjNwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj41MDB4NTAwPC90ZXh0PjwvZz48L3N2Zz4=', data-holder-rendered='true')
+    //  .col-md-7
+    //    h2.featurette-heading
+    //      | Oh yeah, it's that good.
+    //      span.text-muted See for yourself.
+    //    p.lead
+    //      | Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.
+    //hr.featurette-divider
+    //.row.featurette
+    //  .col-md-7
+    //    h2.featurette-heading
+    //      | And lastly, this one.
+    //      span.text-muted Checkmate.
+    //    p.lead
+    //      | Donec ullamcorper nulla non metus auctor fringilla. Vestibulum id ligula porta felis euismod semper. Praesent commodo cursus magna, vel scelerisque nisl consectetur. Fusce dapibus, tellus ac cursus commodo.
+    //  .col-md-5
+    //    img.featurette-image.img-responsive(data-src='holder.js/500x500/auto', alt='500x500', src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDUwMCA1MDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjxkZWZzLz48cmVjdCB3aWR0aD0iNTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iI0VFRUVFRSIvPjxnPjx0ZXh0IHg9IjE5MC4zMjAzMTI1IiB5PSIyNTAiIHN0eWxlPSJmaWxsOiNBQUFBQUE7Zm9udC13ZWlnaHQ6Ym9sZDtmb250LWZhbWlseTpBcmlhbCwgSGVsdmV0aWNhLCBPcGVuIFNhbnMsIHNhbnMtc2VyaWYsIG1vbm9zcGFjZTtmb250LXNpemU6MjNwdDtkb21pbmFudC1iYXNlbGluZTpjZW50cmFsIj41MDB4NTAwPC90ZXh0PjwvZz48L3N2Zz4=', data-holder-rendered='true')
+
+    hr.featurette-divider
+    // /END THE FEATURETTES
+    // FOOTER
+    footer
+      p.pull-right
+        a(href='#') Back to top
+      p
+        | © 2016 北京大学(天津滨海)新一代信息技术研究院. ·
+        a(href='#') Privacy
+        |  ·
+        a(href='#') Terms

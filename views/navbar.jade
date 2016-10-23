@@ -1,0 +1,57 @@
+//
+   Created by Zachary on 2016/10/2.
+
+extends layout.jade
+
+block nav
+  .navbar-wrapper
+    .container
+      nav.navbar.navbar-inverse.navbar-static-top(role='navigation')
+        .container
+          .navbar-header
+            button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#navbar', aria-expanded='false', aria-controls='navbar')
+              span.sr-only Toggle navigation
+              span.icon-bar
+              span.icon-bar
+              span.icon-bar
+            a.navbar-brand(href='#') 移动应用分析平台
+          #navbar.navbar-collapse.collapse
+            ul.nav.navbar-nav
+              - var user = {description:'f'}
+              if highlight == '#'
+                li.active
+                  a(href='/#') 首页
+              else
+                li
+                  a(href='/#') 首页
+              if highlight == 'LibRadar'
+                li.active
+                  a(href='/LibRadar') LibRadar
+              else
+                li
+                  a(href='/LibRadar') LibRadar
+              if highlight == 'RiskEva'
+                li.active
+                  a(href='#contact') RiskEva
+              else
+                li
+                  a(href='#contact') RiskEva
+              li.dropdown
+                a.dropdown-toggle(href='#', data-toggle='dropdown')
+                  | 功能分析
+                  span.caret
+                ul.dropdown-menu(role='menu')
+                  li
+                    a(href='#') 常见应用
+                  li
+                    a(href='#') Another action
+                  li
+                    a(href='#') Something else here
+                  li.divider
+                  li.dropdown-header Nav header
+                  li
+                    a(href='#') Separated link
+                  li
+                    a(href='#') One more separated link
+
+  block content
