@@ -1,5 +1,6 @@
 h3 应用名
 p.lead= original_name
+
 h3 APK
 - var riskEva = (JSON).parse(perms)
 p.lead= riskEva['Name']
@@ -13,9 +14,70 @@ p.lead RiskClass: #{riskEva['SafeClass']}
 - console.log(riskCategory)
 - var dangerPerm = riskEva['Dangerous']
 - var notUsedBy3 = riskEva['Not used by 3rd-party library']
+h4 Permissions in Different Risk Category
+- if (riskCategory['MONEY'].length > 0 || riskCategory['PRIVACY'].length > 0 || riskCategory['INTEGRITY'].length > 0)
+table.table.table-responsive.table-hover(border= 1)
+  thread
+    tr
+      th Risk Category
+      th Permission
+  tbody
+  - if (riskCategory['MONEY'].length > 0)
+    tr
+      td(rowspan= riskCategory['MONEY'].length) Money
+      td #{riskCategory['MONEY'][0]}
+    - var i = 0;
+    - while(i+1<riskCategory['MONEY'].length)
+    - i=i+1;
+    tr
+      td #{riskCategory['MONEY'][i]}
+  - if (riskCategory['PRIVACY'].length > 0)
+    tr
+      td(rowspan= riskCategory['PRIVACY'].length) Privacy
+      td #{riskCategory['PRIVACY'][0]}
+    - i = 0;
+    - while(i+1<riskCategory['PRIVACY'].length)
+    -i = i+1;
+    tr
+      td #{riskCategory['PRIVACY'][i]}
+  - if (riskCategory['INTEGRITY'].length > 0)
+    tr
+      td(rowspan= riskCategory['INTEGRITY'].length) Integrity
+      td #{riskCategory['INTEGRITY'][0]}
+   - i = 0;
+   - while(i+1<riskCategory['INTEGRITY'].length)
+    - i=i+1;
+    tr
+      td #{riskCategory['INTEGRITY'][i]}
+  - else
+    p None
+h4 Dangerous Permissions
+- if(dangerPerm.length > 0)
+  table.table.table-responsive.table-hover
+  tbody
+  - i=0
+  - while( i< dangerPerm.length)
+  - i=i+1;
+  tr
+    td #{dangerPerm[i - 1]}
+- else
+  p None
+
+h4 Permissions that should not used by third-party application
+- if(notUsedBy3.length > 0)
+  table.table.table-responsive.table-hover
+  tbody
+- i=0
+- while( i< notUsedBy3.length)
+- i=i+1;
+  tr
+    td #{notUsedBy3[i - 1]}
+- else
+  p None
 
 h3 包含的库
 - var local_libs = JSON.parse(libs)
+- var apk_result = JSON.parse()
 - console.log(local_libs)
 - if (local_libs.length != 0)
   table.table.table-responsive.table-hover
