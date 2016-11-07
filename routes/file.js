@@ -288,4 +288,79 @@ router.post('/uploading4', function(req, res, next) {
 
     });
 });
+/*上传处理Ajax*/
+router.post('/uploading4', function(req, res, next) {
+    ip_log.warn(' U2 - ' + getClientIp(req));
+    //生成multiparty对象，并配置下载目标路径
+    res_log.warn(' U2 - ' + getClientIp(req));
+    var form = new multiparty.Form({uploadDir: './public/files2/'});
+    //下载后处理
+    form.parse(req, function (err, fields, files) {
+        var filesTmp = JSON.stringify(files, null, 2);
+        console.log(filesTmp);
+        var file_original_name = "";
+        if (err) {
+            console.log('parse error: ' + err);
+        } else {
+
+            var inputFile = files.file[0];
+            var uploadedPath = inputFile.path;
+            file_original_name = inputFile.originalFilename;
+            app_log.warn(uploadedPath + "," + getClientIp(req) + "," + file_original_name);
+        }
+        /*
+         var apktoolInfo;
+         var libs;
+         var time_consumming;
+         */
+        var exec = child_process.exec;
+        pcwd = process.cwd()
+        var cmdStr = 'python ' + pcwd + '/LibRadar/main/main.py ' + pcwd + '/' + uploadedPath;
+        console.log(cmdStr);
+        exec(cmdStr, function (err, stdout, stderr) {
+            if (err) {
+                console.log('Error' + cmdStr);
+                res.render('result', {title: 'Error Occurred', libs: 'None', raw: stderr});
+            } else {
+                success1 = true;
+                res_log.info(stdout);
+                var sp = stdout.split('--Splitter--');
+                var apktoolInfo = sp[0];
+                var libs = sp[1];
+                var time_consumming = sp[3];
+                var newPath = sp[4]
+                cmdStr = 'java -jar ' + pcwd + '/RiskEva/RiskEva.jar ' + newPath + ' ' + file_original_name;
+                cmdStr = cmdStr.replace('\n','');
+                cmdStr = cmdStr.replace('\n','');
+                console.log(cmdStr);
+                exec(cmdStr, function (err, stdout, stderr) {
+                    if (err) {
+                        console.log('Error ' + cmdStr);
+                        console.log("libs:\n" + libs);
+                        res.render('result', {
+                            title: 'Error Occurred',
+                            libs: libs,
+                            time_c: time_consumming,
+                            raw: stderr
+                        });
+                    } else {
+                        var permissions = stdout;
+                        console.log(permissions)
+                        res.render('result3', {
+                            title: 'LibRadar Result',
+                            original_name: file_original_name,
+                            apktool: apktoolInfo,
+                            libs: libs,
+                            time_c: time_consumming,
+                            perms: permissions,
+                            raw: stdout
+                        });
+                    }
+                });
+            }
+        });
+
+
+    });
+});
 module.exports = router;

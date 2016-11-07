@@ -11,5 +11,7 @@ router.get('/test_index', function(req, res, next) {
 router.get('/LibRadar', function(req, res, next) {
   res.render('LibRadar', {title: 'LibRadar', highlight:'LibRadar'});
 });
-
+router.get('/RiskEva', function(req, res, next) {
+  res.render('RiskEva', {title: 'RiskEva', highlight:'RiskEva'});
+});
 module.exports = router;
