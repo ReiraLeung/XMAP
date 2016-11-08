@@ -1,11 +1,8 @@
 h3 应用名
-p.lead= original_name
+- var _name = original_name.toString().replace(".apk","");
+a(href='https://play.google.com/store/apps/details?id=' + _name) original_name
 
-h3 APK
 - var riskEva = (JSON).parse(perms)
-p.lead= riskEva['Name']
-p.lead GooglePlay:
-  a(href='https://play.google.com/store/apps/details?id=' + original_name) https://play.google.com/store/apps/details?id=#{original_name}
 h3 RiskEva
 p.lead RiskScore: #{riskEva['Score']}
 p.lead RiskClass: #{riskEva['SafeClass']}
