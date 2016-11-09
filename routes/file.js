@@ -93,14 +93,14 @@ router.post('/uploading', function(req, res, next){
         exec(cmdStr, function(err, stdout, stderr){
             if (err) {
                 console.log('Error' + cmdStr);
-                res.render('result', {title: 'Error Occurred', libs: 'None', raw: stderr});
+                res.render('result2', {title: 'Error Occurred', libs: 'None', raw: stderr});
             } else {
                 res_log.info(stdout);
                 var sp = stdout.split('--Splitter--');
                 var apktool = sp[0];
                 var libs = sp[1];
                 var time_consuming = sp[3];
-                res.render('result', {title: 'LibRadar Result', original_name: file_original_name, apktool: apktool, libs: libs, time_c: time_consuming, raw: stdout});
+                res.render('result2', {title: 'LibRadar Result', original_name: file_original_name, apktool: apktool, libs: libs, time_c: time_consuming, raw: stdout});
             }
         });
     });
@@ -138,7 +138,7 @@ router.post('/uploading2', function(req, res, next){
                 console.log('Error of ' + cmdStr);
                 console.log("STDOUT" + stdout);
                 console.log((stderr));
-                res.render('result', {title: 'Error Occurred', libs: 'None', raw: stderr});
+                res.render('result2', {title: 'Error Occurred', libs: 'None', raw: stderr});
             } else {
                 res_log.info(stdout);
                 var sp = stdout.split('--Splitter--');
@@ -180,7 +180,7 @@ router.post('/uploading3', function(req, res, next){
                 exec(cmdStr, function (err, stdout, stderr) {
                     if (err) {
                         console.log('Error' + cmdStr);
-                        res.render('result', {title: 'Error Occurred', libs: 'None', raw: stderr});
+                        res.render('result2', {title: 'Error Occurred', libs: 'None', raw: stderr});
                     } else {
                         res_log.info(stdout);
                         var sp = stdout.split('--Splitter--');
@@ -212,7 +212,6 @@ router.post('/uploading3', function(req, res, next){
     });
 });
 
-
 /*上传处理Ajax*/
 router.post('/uploading4', function(req, res, next) {
     ip_log.warn(' U2 - ' + getClientIp(req));
@@ -227,65 +226,106 @@ router.post('/uploading4', function(req, res, next) {
         if (err) {
             console.log('parse error: ' + err);
         } else {
-
             var inputFile = files.file[0];
             var uploadedPath = inputFile.path;
             file_original_name = inputFile.originalFilename;
             app_log.warn(uploadedPath + "," + getClientIp(req) + "," + file_original_name);
         }
-        /*
-         var apktoolInfo;
-         var libs;
-         var time_consumming;
-         */
-        var exec = child_process.exec;
-        pcwd = process.cwd()
-        var cmdStr = 'python ' + pcwd + '/LibRadar/main/main.py ' + pcwd + '/' + uploadedPath;
-        console.log(cmdStr);
-        exec(cmdStr, function (err, stdout, stderr) {
-            if (err) {
-                console.log('Error' + cmdStr);
-                res.render('result', {title: 'Error Occurred', libs: 'None', raw: stderr});
-            } else {
-                success1 = true;
-                res_log.info(stdout);
-                var sp = stdout.split('--Splitter--');
-                var apktoolInfo = sp[0];
-                var libs = sp[1];
-                var time_consumming = sp[3];
-                var newPath = sp[4]
-                cmdStr = 'java -jar ' + pcwd + '/RiskEva/RiskEva.jar ' + newPath + ' ' + file_original_name;
-                cmdStr = cmdStr.replace('\n','');
-                cmdStr = cmdStr.replace('\n','');
-                console.log(cmdStr);
-                exec(cmdStr, function (err, stdout, stderr) {
-                    if (err) {
-                        console.log('Error ' + cmdStr);
-                        console.log("libs:\n" + libs);
-                        res.render('result', {
-                            title: 'Error Occurred',
-                            libs: libs,
-                            time_c: time_consumming,
-                            raw: stderr
-                        });
-                    } else {
-                        var permissions = stdout;
-                        console.log(permissions)
-                        res.render('result3', {
-                            title: 'LibRadar Result',
-                            original_name: file_original_name,
-                            apktool: apktoolInfo,
-                            libs: libs,
-                            time_c: time_consumming,
-                            perms: permissions,
-                            raw: stdout
+        var MongoClient = require('mongodb').MongoClient, assert = require('assert');
+
+        // Connection URL
+        var decodedandget= function () {
+            console.log("be decodeed")
+
+            var exec = child_process.exec;
+            pcwd = process.cwd()
+            var cmdStr = 'python ' + pcwd + '/LibRadar/main/main.py ' + pcwd + '/' + uploadedPath;
+            console.log(cmdStr);
+            exec(cmdStr, function (err, stdout, stderr) {
+                if (err) {
+                    console.log('Error' + cmdStr);
+                    res.render('result2', {title: 'Error Occurred', libs: 'None', raw: stderr});
+                } else {
+                    success1 = true;
+                    res_log.info(stdout);
+                    var sp = stdout.split('--Splitter--');
+                    var apktoolInfo = sp[0];
+                    var libs = sp[1];
+                    var time_consumming = sp[3];
+                    var newPath = sp[4]
+                    cmdStr = 'java -jar ' + pcwd + '/RiskEva/RiskEva2.0.jar ' + newPath + ' ' + file_original_name;
+                    cmdStr = cmdStr.replace('\n', '');
+                    cmdStr = cmdStr.replace('\n', '');
+                    console.log(cmdStr);
+                    exec(cmdStr, function (err, stdout, stderr) {
+                        if (err) {
+                            console.log('Error ' + cmdStr);
+                            console.log("libs:\n" + libs);
+                            res.render('result2', {
+                                title: 'Error Occurred',
+                                libs: libs,
+                                time_c: time_consumming,
+                                raw: stderr
+                            });
+                        } else {
+                            var permissions = stdout;
+                            res.render('result2', {
+                                title: 'RiskEva Result',
+                                original_name: file_original_name,
+                                libs: libs,
+                                time_c: time_consumming,
+                                perms: permissions,
+                            });
+                        }
+                    });
+                }
+            });
+        }
+
+        var findDocuments = function (db, package_name) {
+            var collection = db.collection('maap');
+            collection.find({"package_name": package_name}).toArray(function (err, docs) {
+                if (!err) {
+                    console.log("Found the following records");
+                    var result = docs[0];
+                    if (result != null) {
+                        console.log("find in db get here!");
+
+                        console.log(result["libs"]);
+                        res.render('result2', {
+                            title: 'RiskEva Result',
+                            original_name: package_name,
+                            libs: JSON.stringify(result["libs"]),
+                            time_c: "find in Database, consume 0 s",
+                            perms: JSON.stringify(result["riskEva"])
                         });
                     }
-                });
-            }
+                    else {
+                        console.log("Not Found");
+                        db.close();
+                        decodedandget();
+                        return;
+                    }
+                }
+                else {
+                    console.log("not Found");
+                    decodedandget();
+                    return null;
+                }
+            });
+        }
+
+        // use the findDocuments() function
+        var MongoClient = require('mongodb').MongoClient, assert = require('assert');
+        var file_name = file_original_name.replace(".apk", "");
+        var url = 'mongodb://localhost:27017/androidrank';
+        // Use connect method to connect to the server
+        MongoClient.connect(url, function (err, db) {
+            assert.equal(null, err);
+            console.log("Connected correctly to server");
+            findDocuments(db, file_name);
+
         });
-
-
     });
 });
 module.exports = router;

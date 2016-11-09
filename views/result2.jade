@@ -1,5 +1,99 @@
 h3 应用名
-p.lead= original_name
+- var _name = original_name;//.toString().replace(".apk","");
+font(size = 4)
+    a(href='https://play.google.com/store/apps/details?id=' + _name) #{original_name}
+
+- var riskEva = (JSON).parse(perms)
+h3 风险分析
+    p.lead
+    p.lead RiskScore: #{riskEva['Score']}
+    p.lead RiskClass: #{riskEva['SafeClass']}
+
+h4 权限使用
+table.table.table-responsive.table-hover
+    thead
+        tr
+            th(width="16.7%") Identity
+            th(width="16.7%") Device & app history
+            th(width="16.7%") Device ID & call
+            th(width="16.7%") Contacts
+            th(width="16.7%") Calendar
+            th(width="16.7%") Location
+    tbody
+        tr
+            -if(riskEva['Identity']!=null)
+                td #{riskEva['Identity'].length}
+            -else
+                td 0
+            -if(riskEva['Device & app history']!=null)
+                td #{riskEva['Device & app history'].length}
+            -else
+                td 0
+            -if(riskEva['Device ID & call']!=null)
+                td #{riskEva['Device ID & call'].length}
+            -else
+                td 0
+            -if(riskEva['Contacts']!=null)
+                td #{riskEva['Contacts'].length}
+            -else
+                td 0
+            -if(riskEva['Calendar']!=null)
+                td #{riskEva['Calendar'].length}
+            -else
+                td 0
+            -if(riskEva['Location']!=null)
+                td #{riskEva['Location'].length}
+            -else
+                td 0
+    thead
+        tr
+            th(width="16.7%") Phone
+            th(width="16.7%") Photos/Media/Files
+            th(width="16.7%") Microphone
+            th(width="16.7%") Camera
+            th(width="16.7%") Internet
+            th(width="16.7%") Bluetooth
+    tbody
+        tr
+            -if(riskEva['Phone']!=null)
+                td #{riskEva['Phone'].length}
+            -else
+                td 0
+            -if(riskEva['Photos/Media/Files']!=null)
+                td #{riskEva['Photos/Media/Files'].length}
+            -else
+                td 0
+            -if(riskEva['Microphone']!=null)
+                td #{riskEva['Microphone'].length}
+            -else
+                td 0
+            -if(riskEva['Camera']!=null)
+                td #{riskEva['Camera'].length}
+            -else
+                td 0
+            -if(riskEva['Internet']!=null)
+                td #{riskEva['Internet'].length}
+            -else
+                td 0
+            -if(riskEva['Bluetooth']!=null)
+                td #{riskEva['Bluetooth'].length}
+            -else
+                td 0
+
+h4 第三方应用不应该使用的权限
+- if(riskEva['Not used by 3rd-party library'].length>0)
+    table.table.table-responsive.table-hover
+        tbody
+        - var i = 0;
+        td #{riskEva['Not used by 3rd-party library'][i]}
+        - while(i+1<riskEva['Not used by 3rd-party library'].length)
+            -i = i+1;
+            tr
+            td #{riskEva['Not used by 3rd-party library'][i]}
+- else
+  p.lead None
+
+
 h3 包含的库
 - var local_libs = JSON.parse(libs)
 - console.log(local_libs)
@@ -51,9 +145,7 @@ h3 包含的库
             button.pop(rel="popover" data-content="No Android Permission Used." data-original-title="Detailed Permission Info") None
 - else
   p None.
-h3 Time Consumed
-//button.btn.btn-primary.show-raw Click to Show/Hide Raw Results
-pre.raw= time_c
+
 hr.featurette-divider
 footer
   p.pull-right
