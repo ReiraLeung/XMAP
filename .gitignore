@@ -1,0 +1,5 @@
+logs/*
+node_modules/*
+public/files2/*
+.idea/*
+LibRadar/*
