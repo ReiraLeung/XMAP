@@ -32,21 +32,21 @@ log4js.configure({
         { type: 'console' }, //控制台输出
         {
             type: 'file', //文件输出
-            filename: 'logs/ip_access.log',
+            filename: 'logs/ip_access.txt',
             maxLogSize: 1024,
             backups:3,
             category: 'ip'
         },
         {
             type: 'file', //文件输出
-            filename: 'logs/result.log',
+            filename: 'logs/result.txt',
             maxLogSize: 1024,
             backups:3,
             category: 'res'
         },
         {
             type: 'file', //文件输出
-            filename: 'logs/app.log',
+            filename: 'logs/app.txt',
             maxLogSize: 1024,
             backups:3,
             category: 'app'
