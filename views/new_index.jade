@@ -8,7 +8,7 @@ block page_content
   .container
     .row
       // Blog Entries Column
-      .col-md-8
+      .col-md-9
         block main_content
       // Blog Sidebar Widgets Column
       .col-md-3
@@ -24,24 +24,24 @@ block page_content
         // Blog Categories Well
         .well
           h4
-            a(href='/list?category=&start=21&sort=0') All Categories
+            a(href='/list?category=&start=1&sort=0') All Categories
           .row
             .col-lg-8
               ul.list-unstyled
                 li
-                  a(href='/list') Books and Reference
+                  a(href='/list?category=Books_and_Reference&sort=0&start=1') Books and Reference
                 li
-                  a(href='/list') Business
+                  a(href='/list?category=Business&sort=0&start=1') Business
                 li
-                  a(href='/list') Comics
+                  a(href='/list?category=Comics&sort=0&start=1') Comics
                 li
-                  a(href='/list') Communication
+                  a(href='/list?category=Communication&sort=0&start=1') Communication
                 li
-                  a(href='/list') Education
+                  a(href='/list?category=Education&sort=0&start=1') Education
                 li
-                  a(href='/list') Entertainment
+                  a(href='/list?category=Entertainment&sort=0&start=1') Entertainment
                 li
-                  a(href='/list') Finance
+                  a(href='/list?category=Finance&sort=0&start=1') Finance
             // /.col-lg-6
           // /.row
         // Side Widget Well

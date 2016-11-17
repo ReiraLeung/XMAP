@@ -2,8 +2,35 @@
    Created by liangjingyue on 11/10/16.
 
 extends new_index
-- var list_found = list;
+
 block main_content
+   - var list_found = list;
+   - var startpoint = start;
+   - var cate2 = cate;
+   - console.log(cate2);
+   - var endpoint = startpoint + 19;
+   - if(endpoint>13621)
+      - endpoint = 13629
+   - var  category  = (""+cate2).replace(/ /g,'_');
+   - console.log(category);
+   - var scale = ' '+startpoint+' - '+ endpoint+' of ' + total;
+   - var ratinghelf = 'list?category='+category+'&sort=1&start=1';
+   - var installshelf = 'list?category='+category+'&sort=2&start=1';
+   - var avgratinghelf = 'list?category='+category+'&sort=3&start=1';
+   - var firsthelf =  'list?category='+category+'&sort='+sort+'&start=1';
+   - console.log(firsthelf)
+   - var lasthelf =   'list?category='+category+'&sort='+sort+'&start=13621';
+   - var previoushelf = 'list?category='+category+'&sort='+sort+'&start=';
+   - if(startpoint>=21)
+      - previoushelf = previoushelf+(startpoint-20);
+   - else
+      - previoushelf = previoushelf+'1';
+   - var nexthelf = 'list?category='+category+'&sort='+sort+'&start=';
+   - if(startpoint<13621)
+      - nexthelf = nexthelf+(startpoint+20);
+   - else
+      - nexthelf = nexthelf +'13621';
+
    h1.page-header
       | Page Heading
       small Secondary Text
@@ -11,28 +38,38 @@ block main_content
       .table-responsive
          tbody
             tr
-               th(style="text-align:center;") rank
-               th(style="text-align:center;") name
+               th(style="text-align:center;") Rank
+               th(style="text-align:center;") Name
                th(style="text-align:center;") Market Icon
                th(style="text-align:center;")
-                  a(href="/list") Total rating
+                  a(href=ratinghelf) Total rating
                th(style="text-align:center;")
-                  a(href="/list") Installs
+                  a(href=installshelf) Installs
+               th(style="text-align:center;") Avg rating
                th(style="text-aligh:center;") RiskEva
-            tr
-               td(style="text-align:center;") 1
-               td(style="text-align:center;") facebook
-               td(style="text-align:center;")
-                  img(src="https://lh6.ggpht.com/mp86vbELnqLi2FzvhiKdPX31_oiTRLNyeK8x4IIrbF5eD1D5RdnVwjQP0hwMNR_JdA=w20")
-               td(style="text-align:center;") 52,859,343
-               td(style="text-align:center;") 1000M
-               td(style="text-align:center;") B
-            tr
-               td(style="text-align:center;") 1
-               td(style="text-align:center;") facebook
-               td(style="text-align:center;")
-                  img(src="https://lh6.ggpht.com/mp86vbELnqLi2FzvhiKdPX31_oiTRLNyeK8x4IIrbF5eD1D5RdnVwjQP0hwMNR_JdA=w20")
-               td(style="text-align:center;") 52,859,343
-               td(style="text-align:center;") 1000M
-               td(style="text-align:center;") B
-   p list_found
+            - i=startpoint-1;
+            - each item in list_found
+               - i=i+1;
+               tr
+                  td(style="text-align:center;") #{i}
+                  td(style="text-align:center;") #{item["name"]}
+                  td(style="text-align:center;")
+                     - var imageaddr = item["image"].replace("64","20");
+                     img(src=imageaddr)
+                  td(style="text-align:center;") #{item["total_rating"]}
+                  td(style="text-align:center;") #{item["installs_string"]}
+                  td(style="text-align:center;") #{item["average_rating"]}
+                  - var floatX = Math.round(item["riskEva"]["Score"] * 100) / 100;
+                  td(style="text-align:center;") #{floatX}
+
+   small
+      | #{scale}
+      | &nbsp&nbsp
+      a(href=firsthelf) << First
+      |&nbsp&nbsp
+      a(href=previoushelf)  < Previous
+      |&nbsp&nbsp
+      a(href=nexthelf)  Next >
+      |&nbsp&nbsp
+      a(href=lasthelf) Last >>
+
