@@ -39,15 +39,15 @@ block main_content
       .table-responsive
          tbody
             tr
-               th(style="text-align:center;") Rank
-               th(style="text-align:center;") Name
-               th(style="text-align:center;") Market Icon
-               th(style="text-align:center;")
+               th(style="text-align:center;",width="12%") Rank
+               th(style="text-align:center;",width="25%") Name
+               th(style="text-align:center;",width="15%") Market Icon
+               th(style="text-align:center;",width="12%")
                   a(href=ratinghelf) Total rating
-               th(style="text-align:center;")
+               th(style="text-align:center;",width="12%")
                   a(href=installshelf) Installs
-               th(style="text-align:center;") Avg rating
-               th(style="text-aligh:center;") RiskEva
+               th(style="text-align:center;",width="12%") Avg rating
+               th(style="text-aligh:center;",width="12%") RiskEva
             - i=startpoint-1;
             - each item in list_found
                - i=i+1;

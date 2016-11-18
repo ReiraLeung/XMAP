@@ -16,10 +16,14 @@ block page_content
         .well
           h4 APP Search
           .input-group
-            input.form-control(type='text')
+            input#appname.form-control(type='text')
             span.input-group-btn
-              button.btn.btn-default(type='button')
+              button#searchapp.btn.btn-default(type='button',onclick="searchapk()", value='search')
                 span.glyphicon.glyphicon-search
+          script(type='text/javascript').
+            function searchapk() {
+              window.location.href="/search?appname=" + $('#appname').val();
+            }
           // /.input-group
         // Blog Categories Well
         .well

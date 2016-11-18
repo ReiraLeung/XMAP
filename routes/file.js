@@ -235,7 +235,7 @@ router.post('/uploading4', function(req, res, next) {
       file_original_name = inputFile.originalFilename;
       app_log.warn(uploadedPath + "," + getClientIp(req) + "," + file_original_name);
     }
-    var MongoClient = require('mongodb').MongoClient, assert = require('assert');
+    //var MongoClient = require('mongodb').MongoClient, assert = require('assert');
 
     // Connection URL
     var decodedandget= function () {
