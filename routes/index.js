@@ -17,7 +17,7 @@ router.get('/list', function(req, res, next) {
     sort_Type = {"total_rating":-1};
   }
   if(req.query.sort=='2') {
-    sort_Type = {"install_estimated":-1};
+    sort_Type = {"installs_estimated":-1};
   }
   var category = {};
   if(categorystring != ""){
@@ -28,16 +28,24 @@ router.get('/list', function(req, res, next) {
 
   var findDocuments = function (db) {
     var collection = db.collection('maap');
-    var counts = collection.find(category).count();
-    console.log(sort_Type);
-    console.log(category);
+    console.log(collection.find(category).count());
+    var counts = "";
+    var result = collection.find(category).count(function(err,docs){
+      if(!err){
+        counts = docs;
+        console.log(counts);
+      }
+    });
+
     collection.find(category).sort(sort_Type).skip(start_point-1).limit(20).toArray(function (err, docs) {
       if (!err) {
-        console.log("Found the following records");
+        console.log(sort_Type);
+        console.log(category);
         console.log(counts);
+        console.log("Found the following records");
         res.render('list', {
           title: 'list',
-          total: counts,
+          counts: counts,
           cate: categorystring,
           sort: req.query.sort,
           start: start_point,
