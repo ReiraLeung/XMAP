@@ -6,7 +6,7 @@ extends new_navbar
 block page_content
   // Page Content
   .container
-    .row
+    .row-fluid
       // Blog Entries Column
       .col-md-9
         block main_content
@@ -30,22 +30,53 @@ block page_content
           h4
             a(href='/list?category=&start=1&sort=0') All Categories
           .row
-            .col-lg-8
+            .col-lg-10
               ul.list-unstyled
-                li
-                  a(href='/list?category=Books_and_Reference&sort=0&start=1') Books and Reference
-                li
-                  a(href='/list?category=Business&sort=0&start=1') Business
-                li
-                  a(href='/list?category=Comics&sort=0&start=1') Comics
-                li
-                  a(href='/list?category=Communication&sort=0&start=1') Communication
-                li
-                  a(href='/list?category=Education&sort=0&start=1') Education
-                li
-                  a(href='/list?category=Entertainment&sort=0&start=1') Entertainment
-                li
-                  a(href='/list?category=Finance&sort=0&start=1') Finance
+                font(size = 3)
+                  li
+                    a(href='/list?category=Books_and_Reference&sort=0&start=1') Books and Reference
+                  li
+                    a(href='/list?category=Business&sort=0&start=1') Business
+                  li
+                    a(href='/list?category=Comics&sort=0&start=1') Comics
+                  li
+                    a(href='/list?category=Communication&sort=0&start=1') Communication
+                  li
+                    a(href='/list?category=Education&sort=0&start=1') Education
+                  li
+                    a(href='/list?category=Entertainment&sort=0&start=1') Entertainment
+                  li
+                    a(href='/list?category=Finance&sort=0&start=1') Finance
+                  li
+                    a(href='/list?category=Health_and_fitness&sort=0&start=1') Health and fitness
+                  li
+                    a(href='/list?category=Libraries_and_Demo&sort=0&start=1') Libraries and Demo
+                  li
+                    a(href='/list?category=Lifestyle&sort=0&start=1') Lifestyle
+                  li
+                    a(href='/list?category=Medical&sort=0&start=1') Medical
+                  li
+                    a(href='/list?category=Music_and_Audio&sort=0&start=1') Music and Audio
+                  li
+                    a(href='/list?category=News_and_Magazines&sort=0&start=1') News and Magazines
+                  li
+                    a(href='/list?category=Personalization&sort=0&start=1') Personalization
+                  li
+                    a(href='/list?category=Photography&sort=0&start=1') Photography
+                  li
+                    a(href='/list?category=Productivity&sort=0&start=1') Productivity
+                  li
+                    a(href='/list?category=Shopping&sort=0&start=1') Shopping
+                  li
+                    a(href='/list?category=Social&sort=0&start=1') Social
+                  li
+                    a(href='/list?category=Sports&sort=0&start=1') Sports
+                  li
+                    a(href='/list?category=Tools&sort=0&start=1') Tools
+                  li
+                    a(href='/list?category=Travel_and_Local&sort=0&start=1') Travel and Local
+                  li
+                    a(href='/list?category=Weather&sort=0&start=1') Weather
             // /.col-lg-6
           // /.row
         // Side Widget Well

@@ -4,6 +4,7 @@
 extends new_index
 
 block main_content
+   - var levels = ['A','B','C','D','E'];
    - var list_found = list;
    - var startpoint = start;
    - var cate2 = cate;
@@ -40,8 +41,8 @@ block main_content
          tbody
             tr
                th(style="text-align:center;",width="12%") Rank
-               th(style="text-align:center;",width="25%") Name
-               th(style="text-align:center;",width="15%") Market Icon
+               th(style="text-align:center;",width="28%") Name
+               th(style="text-align:center;",width="12%") Icon
                th(style="text-align:center;",width="12%")
                   a(href=ratinghelf) Total rating
                th(style="text-align:center;",width="12%")
@@ -56,13 +57,40 @@ block main_content
                   td(style="text-align:center;")
                      a(href="/application?app="+item["package_name"]) #{item["name"]}
                   td(style="text-align:center;")
-                     - var imageaddr = item["image"].replace("64","25");
+                     - var imageaddr = item["image"].replace("64","26");
                      img(src=imageaddr)
                   td(style="text-align:center;") #{item["total_rating"]}
                   td(style="text-align:center;") #{item["installs_string"]}
                   td(style="text-align:center;") #{item["average_rating"]}
                   - var floatX = Math.round(item["riskEva"]["Score"] * 100) / 100;
-                  td(style="text-align:center;") #{floatX}
+                  - var level = item["riskEva"]["SafeClass"];
+                  - var result = levels[level-1]+" ( "+floatX+" )";
+                  - var colorstring = "000";
+
+                  - if(level==1){
+                  -     console.log(level)
+                  -     colorstring = "32cd32"
+                  - }
+                  - if(level==2){
+                  -     console.log(level)
+                  -     colorstring = "7fff00"
+                  - }
+                  - if(level==3){
+                  -     console.log(level)
+                  -     colorstring = "CDAD00"
+                  - }
+                  - if(level==4){
+                  -     console.log(level)
+                  -     colorstring = "EE9A00"
+                  - }
+                  - if(level==5){
+                  -     console.log(level)
+                  -     colorstring = "f00"
+                  - }
+                  - var colorstyle = "color: #"+colorstring+";";
+
+                  td(style = colorstyle)
+                     strong #{result}
 
    small
       | #{scale}

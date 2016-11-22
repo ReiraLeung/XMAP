@@ -1,160 +1,123 @@
 //
-   Created by liangjingyue on 11/18/16.
+  Created by liangjingyue on 11/18/16.
 
 extends new_index
 
 
 
 block main_content
-   - var _name = original_name;//.toString().replace(".apk","");
-   - var riskEva = perms
-   h3 应用名
-   font(size = 4)
-      a(href='https://play.google.com/store/apps/details?id=' + _name) #{_name}
-   -console.log(_name);
-   - console.log(riskEva);
-   h3 风险分析
-      p.lead
-      p.lead RiskScore: #{riskEva["Score"]}
-      p.lead RiskClass: #{riskEva['SafeClass']}
-   h4 权限使用
-   table.table.table-responsive.table-hover
-      thead
-         tr
-            th(width="16.7%") Identity
-            th(width="16.7%") Device & app history
-            th(width="16.7%") Device ID & call
-            th(width="16.7%") Contacts
-            th(width="16.7%") Calendar
-            th(width="16.7%") Location
-      tbody
-         tr
-            -if(riskEva['Identity']!=null)
-               td #{riskEva['Identity'].length}
-            -else
-               td 0
-            -if(riskEva['Device & app history']!=null)
-               td #{riskEva['Device & app history'].length}
-            -else
-               td 0
-            -if(riskEva['Device ID & call']!=null)
-               td #{riskEva['Device ID & call'].length}
-            -else
-               td 0
-            -if(riskEva['Contacts']!=null)
-               td #{riskEva['Contacts'].length}
-            -else
-               td 0
-            -if(riskEva['Calendar']!=null)
-               td #{riskEva['Calendar'].length}
-            -else
-               td 0
-            -if(riskEva['Location']!=null)
-               td #{riskEva['Location'].length}
-            -else
-               td 0
-      thead
-         tr
-            th(width="16.7%") Phone
-            th(width="16.7%") Photos/Media/Files
-            th(width="16.7%") Microphone
-            th(width="16.7%") Camera
-            th(width="16.7%") Internet
-            th(width="16.7%") Bluetooth
-      tbody
-         tr
-            -if(riskEva['Phone']!=null)
-               td #{riskEva['Phone'].length}
-            -else
-               td 0
-            -if(riskEva['Photos/Media/Files']!=null)
-               td #{riskEva['Photos/Media/Files'].length}
-            -else
-               td 0
-            -if(riskEva['Microphone']!=null)
-               td #{riskEva['Microphone'].length}
-            -else
-               td 0
-            -if(riskEva['Camera']!=null)
-               td #{riskEva['Camera'].length}
-            -else
-               td 0
-            -if(riskEva['Internet']!=null)
-               td #{riskEva['Internet'].length}
-            -else
-               td 0
-            -if(riskEva['Bluetooth']!=null)
-               td #{riskEva['Bluetooth'].length}
-            -else
-               td 0
-   h4 第三方应用不应该使用的权限
-   - if(riskEva['Not used by 3rd-party library'].length>0)
-      table.table.table-responsive.table-hover
-         tbody
-         - var i = 0;
-         td #{riskEva['Not used by 3rd-party library'][i]}
-      - while(i+1<riskEva['Not used by 3rd-party library'].length)
-         -i = i+1;
-         tr
-         td #{riskEva['Not used by 3rd-party library'][i]}
-   - else
-      p.lead None
-   h3 包含的库
-   - var local_libs = JSON.parse(libs)
-   - console.log(local_libs)
-   - if (local_libs.length != 0)
-      table.table.table-responsive.table-hover
-         thead
-            tr
-               th Library Name
-               th Common Package Name
-               th Current Package Name
-               th Library Type
-               th Popularity
-               th Web Link
-               th Permissions
+  - var _name = original_name;//.toString().replace(".apk","");
+  - var usename = name;
+  - var riskEva = perms;
+  - var logo = image.replace("64","100");
+  - var permissionGroup = ["Identity","Device & app history","Device ID & call", "Contacts", "Calendar", "Location", "SMS", "Phone", "Photos/Media/Files", "Microphone", "Camera", "Internet", "Bluetooth"];
+  .container-fluid
+    .row
+      .col-lg-4
+        img.img-responsive.img-rounded(src = logo,style='width:70%; height:70%;')
+      .col-lg-6
+        h3 应用名
+        font(size = 4)
+          a(href='https://play.google.com/store/apps/details?id=' + _name) #{usename}
+        - console.log(_name);
+        - console.log(riskEva);
+        h3 风险分析
+          p.lead
+          p.lead RiskScore: #{riskEva["Score"]}
+          p.lead RiskClass: #{riskEva['SafeClass']}
+
+    .row
+      .col-lg-10
+        h3 权限使用
+        script(type='text/javascript').
+          function f1(group) {
+            if (document.getElementById(group).style.display == 'none') {
+              document.getElementById(group).style.display = 'block'
+            }
+            else {
+              document.getElementById(group).style.display = 'none'
+            }
+          }
+        - var j=-1;
+        - while(j<10) {
+          - j = j+1;
+          - var group = permissionGroup[j];
+          -if(riskEva[group]!=null)
+            h5(onclick='f1(\"'+group+'\");') #{group}
+            p(id = group style='display:none;') #{riskEva[group]}
+        -}
+
+        h4 第三方应用不应该使用的权限
+        - if(riskEva['Not used by 3rd-party library'].length>0)
+          table.table.table-responsive.table-hover
             tbody
-         each obj in local_libs
+            - var i = 0;
+            td #{riskEva['Not used by 3rd-party library'][i]}
+          - while(i+1<riskEva['Not used by 3rd-party library'].length)
+            -i = i+1;
             tr
-               td= obj['lib']
-               - if (obj['pn'].length > 32) {
+            td #{riskEva['Not used by 3rd-party library'][i]}
+        - else
+          p None
+    .row
+      .col-lg-10
+        h3 包含的库
+        - var local_libs = JSON.parse(libs)
+        - console.log(local_libs)
+        - if (local_libs.length != 0)
+          table.table.table-responsive.table-hover
+            thead
+              tr
+                th Library Name
+                th Common Package Name
+                th Current Package Name
+                th Library Type
+                th Popularity
+                th Web Link
+                th Permissions
+              tbody
+            each obj in local_libs
+              tr
+                td= obj['lib']
+                - if (obj['pn'].length > 32) {
                   td
-                     p.long_pn(data-toggle='tooltip' title=obj['pn'].toString().replace(/\//g, ' / '))= obj['pn'].substr(0, 30) + '...'
-               - }
-               - else
+                    p.long_pn(data-toggle='tooltip' title=obj['pn'].toString().replace(/\//g, ' / '))= obj['pn'].substr(0, 30) + '...'
+                - }
+                - else
                   td= obj['pn']
-               - if (obj['cpn'].length > 32) {
+                - if (obj['cpn'].length > 32) {
                   td
-                     p.long_pn(data-toggle='tooltip' title=obj['cpn'].toString().replace(/\//g, ' / '))= obj['cpn'].substr(0, 30) + '...'
-               -}
-               - else
+                    p.long_pn(data-toggle='tooltip' title=obj['cpn'].toString().replace(/\//g, ' / '))= obj['cpn'].substr(0, 30) + '...'
+                -}
+                - else
                   td= obj['cpn']
                   td=obj['tp']
                   td= obj['dn']
                   td
-                     - var web_link = obj['ch']
-                     - if (web_link == undefined || web_link == "")
-                        p &nbsp;
-                     - else
-                        - if (web_link.substr(0, 4) != "http") { web_link = 'http://' + web_link;
-                           a(href= web_link target="_blank") Link
-                        - }
-                        - else
-                           a(href= web_link target="_blank") Link
+                    - var web_link = obj['ch']
+                    - if (web_link == undefined || web_link == "")
+                      p &nbsp;
+                    - else
+                      - if (web_link.substr(0, 4) != "http") { web_link = 'http://' + web_link;
+                        a(href= web_link target="_blank") Link
+                      - }
+                      - else
+                        a(href= web_link target="_blank") Link
                   td
-                     - var detailed_information = obj['p'].toString().replace(/,/g, '    ');
-                     - if( detailed_information != "")
-                        button.pop(rel="popover" data-content=detailed_information data-original-title="Detailed Permission Info") Details
-                     - else
-                        button.pop(rel="popover" data-content="No Android Permission Used." data-original-title="Detailed Permission Info") None
-   - else
-      p None.
-   hr.featurette-divider
-   footer
-      p.pull-right
-         a(href = '#') Back to top
-         p
-         | © 2016 北京大学(天津滨海)新一代信息技术研究院. ·
-         a(href = '#') Privacy
-         |  ·
-         a(href = '#') Terms
+                    - var detailed_information = obj['p'].toString().replace(/,/g, '   ');
+                    - if( detailed_information != "")
+                      button.pop(rel="popover" data-content=detailed_information data-original-title="Detailed Permission Info") Details
+                    - else
+                      button.pop(rel="popover" data-content="No Android Permission Used." data-original-title="Detailed Permission Info") None
+        - else
+          p None.
+
+        hr.featurette-divider
+        footer
+          p.pull-right
+            a(href = '#') Back to top
+            p
+            | © 2016 北京大学(天津滨海)新一代信息技术研究院. ·
+            a(href = '#') Privacy
+            |  ·
+            a(href = '#') Terms
