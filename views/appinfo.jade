@@ -3,31 +3,53 @@
 
 extends new_index
 
-
-
 block main_content
   - var _name = original_name;//.toString().replace(".apk","");
   - var usename = name;
   - var riskEva = perms;
   - var logo = image.replace("64","100");
+  - var levels = ['A','B','C','D','E'];
   - var permissionGroup = ["Identity","Device & app history","Device ID & call", "Contacts", "Calendar", "Location", "SMS", "Phone", "Photos/Media/Files", "Microphone", "Camera", "Internet", "Bluetooth"];
   .container-fluid
-    .row
+    .row-fluid
       .col-lg-4
         img.img-responsive.img-rounded(src = logo,style='width:70%; height:70%;')
       .col-lg-6
-        h3 应用名
-        font(size = 4)
+        h3
           a(href='https://play.google.com/store/apps/details?id=' + _name) #{usename}
         - console.log(_name);
-        - console.log(riskEva);
         h3 风险分析
           p.lead
-          p.lead RiskScore: #{riskEva["Score"]}
-          p.lead RiskClass: #{riskEva['SafeClass']}
+          - var floatX = Math.round(riskEva["Score"] * 100) / 100;
+          - var level = riskEva["SafeClass"];
+          - var result = levels[level-1]+" ( "+floatX+" )";
+          - var colorstring = "000";
 
-    .row
-      .col-lg-10
+          - if(level==1){
+          -     console.log(level)
+          -     colorstring = "32cd32"
+          - }
+          - if(level==2){
+          -     console.log(level)
+          -     colorstring = "7fff00"
+          - }
+          - if(level==3){
+          -     console.log(level)
+          -     colorstring = "CDAD00"
+          - }
+          - if(level==4){
+          -     console.log(level)
+          -     colorstring = "EE9A00"
+          - }
+          - if(level==5){
+          -     console.log(level)
+          -     colorstring = "f00"
+          - }
+          - var colorstyle = "color: #"+colorstring+";";
+          p(style= colorstyle) RiskEva: #{result}
+
+    .row-fluid
+      .col-lg-11
         h3 权限使用
         script(type='text/javascript').
           function f1(group) {
@@ -43,23 +65,36 @@ block main_content
           - j = j+1;
           - var group = permissionGroup[j];
           -if(riskEva[group]!=null)
-            h5(onclick='f1(\"'+group+'\");') #{group}
-            p(id = group style='display:none;') #{riskEva[group]}
+            h4(onclick='f1(\"'+group+'\");') #{group}
+            ul.list-unstyled(id = group style='display:none;')
+              - each perm in riskEva[group]
+                li #{perm}
         -}
 
-        h4 第三方应用不应该使用的权限
         - if(riskEva['Not used by 3rd-party library'].length>0)
-          table.table.table-responsive.table-hover
-            tbody
-            - var i = 0;
-            td #{riskEva['Not used by 3rd-party library'][i]}
-          - while(i+1<riskEva['Not used by 3rd-party library'].length)
-            -i = i+1;
-            tr
-            td #{riskEva['Not used by 3rd-party library'][i]}
-        - else
-          p None
-    .row
+          h4(onclick='f1(\"third\");') 第三方应用不应该使用的权限
+          ul.list-unstyled(id = "third" style='display:none;')
+            each perm in riskEva['Not used by 3rd-party library']
+              li #{perm}
+    .row-fluid
+      .col-lg-11
+        h3 权限使用
+        table.table.table-responsive.table-hover
+          - var j=-1;
+          - while(j<10) {
+            - j = j+1;
+            - var group = permissionGroup[j];
+            -if(riskEva[group]!=null)
+              thead
+                tr
+                  th #{group}
+              tbody
+                ul.list-unstyled(id = group style='display:none;')
+                  - each perm in riskEva[group]
+                    tr
+                      td #{perm}
+          - }
+    .row-fluid
       .col-lg-10
         h3 包含的库
         - var local_libs = JSON.parse(libs)
@@ -79,15 +114,15 @@ block main_content
             each obj in local_libs
               tr
                 td= obj['lib']
-                - if (obj['pn'].length > 32) {
+                - if (obj['pn'].length > 22) {
                   td
-                    p.long_pn(data-toggle='tooltip' title=obj['pn'].toString().replace(/\//g, ' / '))= obj['pn'].substr(0, 30) + '...'
+                    p.long_pn(data-toggle='tooltip' title=obj['pn'].toString().replace(/\//g, ' / '))= obj['pn'].substr(0, 20) + '...'
                 - }
                 - else
                   td= obj['pn']
-                - if (obj['cpn'].length > 32) {
+                - if (obj['cpn'].length > 22) {
                   td
-                    p.long_pn(data-toggle='tooltip' title=obj['cpn'].toString().replace(/\//g, ' / '))= obj['cpn'].substr(0, 30) + '...'
+                    p.long_pn(data-toggle='tooltip' title=obj['cpn'].toString().replace(/\//g, ' / '))= obj['cpn'].substr(0, 20) + '...'
                 -}
                 - else
                   td= obj['cpn']
