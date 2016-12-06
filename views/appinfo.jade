@@ -14,11 +14,12 @@ block main_content
     .row-fluid
       .col-lg-4
         img.img-responsive.img-rounded(src = logo,style='width:70%; height:70%;')
-      .col-lg-6
-        h3
+      .col-lg-8
+        h2
           a(href='https://play.google.com/store/apps/details?id=' + _name) #{usename}
         - console.log(_name);
-        h3 风险分析
+        h3
+        h4 风险分析
           p.lead
           - var floatX = Math.round(riskEva["Score"] * 100) / 100;
           - var level = riskEva["SafeClass"];
@@ -43,39 +44,11 @@ block main_content
           - }
           - if(level==5){
           -     console.log(level)
-          -     colorstring = "f00"
+          -     colorstring = "d9534f"
           - }
           - var colorstyle = "color: #"+colorstring+";";
           p(style= colorstyle) RiskEva: #{result}
 
-    .row-fluid
-      .col-lg-11
-        h3 权限使用
-        script(type='text/javascript').
-          function f1(group) {
-            if (document.getElementById(group).style.display == 'none') {
-              document.getElementById(group).style.display = 'block'
-            }
-            else {
-              document.getElementById(group).style.display = 'none'
-            }
-          }
-        - var j=-1;
-        - while(j<10) {
-          - j = j+1;
-          - var group = permissionGroup[j];
-          -if(riskEva[group]!=null)
-            h4(onclick='f1(\"'+group+'\");') #{group}
-            ul.list-unstyled(id = group style='display:none;')
-              - each perm in riskEva[group]
-                li #{perm}
-        -}
-
-        - if(riskEva['Not used by 3rd-party library'].length>0)
-          h4(onclick='f1(\"third\");') 第三方应用不应该使用的权限
-          ul.list-unstyled(id = "third" style='display:none;')
-            each perm in riskEva['Not used by 3rd-party library']
-              li #{perm}
     .row-fluid
       .col-lg-11
         h3 权限使用
@@ -147,12 +120,4 @@ block main_content
         - else
           p None.
 
-        hr.featurette-divider
-        footer
-          p.pull-right
-            a(href = '#') Back to top
-            p
-            | © 2016 北京大学(天津滨海)新一代信息技术研究院. ·
-            a(href = '#') Privacy
-            |  ·
-            a(href = '#') Terms
+

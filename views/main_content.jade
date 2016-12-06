@@ -8,8 +8,7 @@ block main_content
   - var i=-1;
   - var levels = ['A','B','C','D','E'];
   h1.page-header
-    | Page Heading
-    small Secondary Text
+    | 典型应用
   .container(style='width: 100%;')
     .row-fluid
       - each item in list_found
@@ -25,19 +24,19 @@ block main_content
           - var colorstring = "000";
 
           - if(level==1){
-          -    colorstring = "32cd32"
+          -    colorstring = "5cb85c"
           - }
           - if(level==2){
-          -    colorstring = "C0FF3E"
+          -    colorstring = "8eb458"
           - }
           - if(level==3){
-          -    colorstring = "CDAD00"
+          -    colorstring = "bfb053"
           - }
           - if(level==4){
-          -    colorstring = "EE9A00"
+          -    colorstring = "f0ad4e"
           - }
           - if(level==5){
-          -    colorstring = "f00"
+          -    colorstring = "d9534f"
           - }
           - var colorstyle = "color: #"+colorstring+";";
           - console.log(colorstyle);

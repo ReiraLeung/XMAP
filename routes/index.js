@@ -34,7 +34,9 @@ router.get('/', function(req, res, next) {
 router.get('/test_index', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
-
+router.get('/about', function(req, res, next) {
+  res.render('about', { title: '关于' });
+});
 router.get('/list', function(req, res, next) {
   var categorystring = ""+req.query.category;
   var sort_Type = {"rank":1};

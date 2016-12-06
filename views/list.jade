@@ -34,20 +34,23 @@ block main_content
       - nexthelf = nexthelf +lasthelf;
 
    h1.page-header
-      | Page Heading
-      small Secondary Text
+      -if( cate=="")
+         | 所有类别
+      -else
+         | #{cate}
+      small
    table.table.table-hover
       .table-responsive
          tbody
             tr
-               th(style="text-align:center;",width="12%") Rank
-               th(style="text-align:center;",width="28%") Name
-               th(style="text-align:center;",width="12%") Icon
+               th(style="text-align:center;",width="12%") 序号
+               th(style="text-align:center;",width="28%") 名次
+               th(style="text-align:center;",width="12%") 图标
                th(style="text-align:center;",width="12%")
-                  a(href=ratinghelf) Total rating
+                  a(href=ratinghelf) 总星数
                th(style="text-align:center;",width="12%")
-                  a(href=installshelf) Installs
-               th(style="text-align:center;",width="12%") Avg rating
+                  a(href=installshelf) 安装数
+               th(style="text-align:center;",width="12%") 平均星数
                th(style="text-aligh:center;",width="12%") RiskEva
             - i=startpoint-1;
             - each item in list_found
@@ -95,11 +98,13 @@ block main_content
    small
       | #{scale}
       | &nbsp&nbsp
-      a(href=firsthelf) << First
+      a(href=firsthelf) << 首页
       |&nbsp&nbsp
-      a(href=previoushelf)  < Previous
+      a(href=previoushelf)  < 前一页
       |&nbsp&nbsp
-      a(href=nexthelf)  Next >
+      a(href=nexthelf)  后一页 >
       |&nbsp&nbsp
-      a(href=lasthelf) Last >>
+      a(href=lasthelf) 最后一页 >>
+
+   p
 
