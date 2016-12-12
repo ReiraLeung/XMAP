@@ -109,19 +109,22 @@ router.get('/application', function (req, res, next) {
         var result = docs[0];
 
         if (result != null) {
-
-          console.log("Found the following records");
-          //console.log(result["riskEva"]);
-          res.render('appinfo', {
-            title: 'RiskEva Result',
-            original_name: package_name,
-            name: result["name"],
-            image:result["image"],
-            cate:result["category"],
-            libs: JSON.stringify(result["libs"]),
-            time_c: "find in Database, consume 0 s",
-            perms: result["riskEva"]
-          });
+          console.log("Found the app");
+          collection.find({"category":result["category"]}).sort({"total_rating":-1}).limit(6).toArray(function(error,document){
+            //console.log(result["riskEva"]);
+            var recommendlist = document;
+            res.render('appinfo', {
+              title: 'RiskEva Result',
+              original_name: package_name,
+              name: result["name"],
+              image:result["image"],
+              cate:result["category"],
+              libs: JSON.stringify(result["libs"]),
+              time_c: "find in Database, consume 0 s",
+              perms: result["riskEva"],
+              rcm:recommendlist
+            });
+          })
         }
         else {
           console.log("Not Found");
@@ -152,8 +155,8 @@ router.get('/search', function(req, res, next) {
       if (!err) {
         var result = docs[0];
         if (result != null) {
+          console.log("Found the app");
 
-          console.log("Found the following records");
           console.log(result["riskEva"]);
           res.render('appinfo', {
             title: 'RiskEva Result',
