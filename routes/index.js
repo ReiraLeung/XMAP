@@ -107,6 +107,7 @@ router.get('/application', function (req, res, next) {
     collection.find({"package_name": package_name}).toArray(function (err, docs) {
       if (!err) {
         var result = docs[0];
+
         if (result != null) {
 
           console.log("Found the following records");

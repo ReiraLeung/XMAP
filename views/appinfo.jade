@@ -12,61 +12,74 @@ block main_content
   - var permissionGroup = ["Identity","Device & app history","Device ID & call", "Contacts", "Calendar", "Location", "SMS", "Phone", "Photos/Media/Files", "Microphone", "Camera", "Internet", "Bluetooth"];
   .container-fluid
     .row-fluid
-      .col-lg-4
-        img.img-responsive.img-rounded(src = logo,style='width:70%; height:70%;')
       .col-lg-8
-        h2
-          a(href='https://play.google.com/store/apps/details?id=' + _name) #{usename}
-        - console.log(_name);
-        h3
-        h4 风险分析
+         .row-fluid
+           .col-lg-4
+             p.lead
+             img.img-responsive.img-rounded(src = logo,style='width:90%; height:90%;')
+           .col-lg-8
+             h2
+               a(href='https://play.google.com/store/apps/details?id=' + _name) #{usename}
+             - console.log(_name);
+             h3
+             h4 风险分析
+               p.lead
+               - var floatX = Math.round(riskEva["Score"] * 100) / 100;
+               - var level = riskEva["SafeClass"];
+               - var result = levels[level-1]+" ( "+floatX+" )";
+               - var colorstring = "000";
+
+               - if(level==1){
+               -     console.log(level)
+               -     colorstring = "32cd32"
+               - }
+               - if(level==2){
+               -     console.log(level)
+               -     colorstring = "7fff00"
+               - }
+               - if(level==3){
+               -     console.log(level)
+               -     colorstring = "CDAD00"
+               - }
+               - if(level==4){
+               -     console.log(level)
+               -     colorstring = "EE9A00"
+               - }
+               - if(level==5){
+               -     console.log(level)
+               -     colorstring = "d9534f"
+               - }
+               - var colorstyle = "color: #"+colorstring+";";
+               p(style= colorstyle) RiskEva: #{result}
+
+         .row-fluid
+           .col-lg-11
+             h3 权限使用
+             table.table.table-responsive.table-hover
+               - var j=-1;
+               - while(j<10) {
+                 - j = j+1;
+                 - var group = permissionGroup[j];
+                 -if(riskEva[group]!=null)
+                   thead
+                     tr
+                       th #{group}
+                   tbody
+                     ul.list-unstyled(id = group style='display:none;')
+                       - each perm in riskEva[group]
+                         tr
+                           td #{perm}
+               - }
+      .col-lg-3
+        .row-fluid
           p.lead
-          - var floatX = Math.round(riskEva["Score"] * 100) / 100;
-          - var level = riskEva["SafeClass"];
-          - var result = levels[level-1]+" ( "+floatX+" )";
-          - var colorstring = "000";
+          p.lead
+          p.lead 推荐应用
+        .row-fluid
+          img.img-responsive.img-rounded(src = logo,style='width:60%; height:60%;')
 
-          - if(level==1){
-          -     console.log(level)
-          -     colorstring = "32cd32"
-          - }
-          - if(level==2){
-          -     console.log(level)
-          -     colorstring = "7fff00"
-          - }
-          - if(level==3){
-          -     console.log(level)
-          -     colorstring = "CDAD00"
-          - }
-          - if(level==4){
-          -     console.log(level)
-          -     colorstring = "EE9A00"
-          - }
-          - if(level==5){
-          -     console.log(level)
-          -     colorstring = "d9534f"
-          - }
-          - var colorstyle = "color: #"+colorstring+";";
-          p(style= colorstyle) RiskEva: #{result}
+        .row-fluid
 
-    .row-fluid
-      .col-lg-11
-        h3 权限使用
-        table.table.table-responsive.table-hover
-          - var j=-1;
-          - while(j<10) {
-            - j = j+1;
-            - var group = permissionGroup[j];
-            -if(riskEva[group]!=null)
-              thead
-                tr
-                  th #{group}
-              tbody
-                ul.list-unstyled(id = group style='display:none;')
-                  - each perm in riskEva[group]
-                    tr
-                      td #{perm}
-          - }
     .row-fluid
       .col-lg-10
         h3 包含的库
